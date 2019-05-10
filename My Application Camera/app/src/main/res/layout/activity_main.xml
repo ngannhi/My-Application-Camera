@@ -10,8 +10,7 @@
     <FrameLayout
         android:id="@+id/framelayout_camera"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.5"></FrameLayout>
+        android:layout_height="500dp"></FrameLayout>
     <ImageButton
         android:id="@+id/btnCamera"
         android:layout_width="50dp"
