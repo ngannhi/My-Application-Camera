@@ -10,13 +10,16 @@
     <FrameLayout
         android:id="@+id/framelayout_camera"
         android:layout_width="match_parent"
-        android:layout_height="500dp"></FrameLayout>
+        android:layout_height="match_parent"
+        android:layout_weight="0.7"
+        ></FrameLayout>
+
     <ImageButton
         android:id="@+id/btnCamera"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/camera"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="100dp" />
+        android:layout_weight="0.3"
+        android:src="@drawable/camera" />
 
 </LinearLayout>

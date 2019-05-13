@@ -1,10 +1,14 @@
 package com.example.myapplicationcamera;
 
+import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Surface;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -16,6 +20,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Parameter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.SimpleFormatter;
@@ -52,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     FileOutputStream fileOutputStream = new FileOutputStream(pictureFile);
                     fileOutputStream.write(data);
                     fileOutputStream.close();
+                    camera.startPreview();
                 }catch (FileNotFoundException e){
                     Log.d("MainActivity", "File not found: " + e.getMessage());
                 }catch (IOException e){
@@ -69,10 +75,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public static Camera getCameraInstance(){
+    public Camera getCameraInstance(){
         Camera c = null;
+
         try {
-            c = Camera.open(); // attempt to get a Camera instance
+
+//            Camera.Parameters parameters = c.getParameters();
+//            List<String> focusModes = parameters.getSupportedFocusModes();
+//            if(focusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO)){
+//                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+//                c.setParameters(parameters);
+//            }
+
+            c = Camera.open(0); // attempt to get a Camera instance
+
         }
         catch (Exception e){
             // Camera is not available (in use or does not exist)
@@ -80,7 +96,8 @@ public class MainActivity extends AppCompatActivity {
         return c; // returns null if camera is unavailable
     }
 
-    private static File getOutPutMediaFile(){
+    private File getOutPutMediaFile(){
+        //File mediaStorage = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "MyCameraApp");
         File mediaStorage = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "MyCameraApp");
         if(!mediaStorage.exists()){
             if(!mediaStorage.mkdirs()){
