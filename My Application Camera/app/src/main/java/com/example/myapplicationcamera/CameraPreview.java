@@ -34,13 +34,11 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             e.printStackTrace();
         }
         Camera.Parameters pare = camera.getParameters();
-//        if(pare.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)){
-//            pare.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
-//        } else {
-//            pare.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-//        }
-//        // set Camera parameters
-//        camera.setParameters(pare);
+        List<String> focusModes = pare.getSupportedFocusModes();
+        if (focusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE))
+        {
+            pare.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+        }
         List<Camera.Size> sizes = pare.getSupportedPictureSizes();
         Camera.Size mSize = sizes.get(2);
 
@@ -85,7 +83,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
+        Log.d("CameraPreview", "width: " + width + "height: " + height);
         if(surfaceHolder.getSurface() == null){
             return;
         }
@@ -96,6 +94,8 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         }
 
         try {
+//            Camera.Parameters parameters=camera.getParameters();
+//            parameters.setPreviewSize(3000,4000);
             camera.setPreviewDisplay(holder);
             //setCameraDisplayOrientation((Activity) context, 0, camera);
             camera.startPreview();
