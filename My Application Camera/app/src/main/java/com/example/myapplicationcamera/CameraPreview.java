@@ -28,11 +28,6 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        try {
-            setFocus(holder);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         Camera.Parameters pare = camera.getParameters();
         List<String> focusModes = pare.getSupportedFocusModes();
         if (focusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE))
@@ -109,17 +104,6 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     }
 
-    public void setFocus(SurfaceHolder holder) throws IOException {
-        Camera.Parameters params = camera.getParameters();
-        List<String> focusModes = params.getSupportedFocusModes();
-        if (focusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO))
-        {
-            params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-        }
-        camera.setParameters(params);
-        camera.setPreviewDisplay(holder);
-        camera.startPreview();
-    }
 /*
     public void setCameraDisplayOrientation(Activity activity, int cameraId, Camera camera){
         Camera.CameraInfo info = new Camera.CameraInfo();

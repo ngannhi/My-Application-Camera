@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".CameraFrontActivity">
 
     <FrameLayout
-        android:id="@+id/framelayout_camera"
+        android:id="@+id/framelayout_camera_front"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.5"></FrameLayout>
@@ -25,17 +25,17 @@
             android:layout_height="wrap_content"
             android:gravity="left">
             <ImageButton
-                android:id="@+id/btnImage"
+                android:id="@+id/btnImageFront"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/picture"
                 android:background="@android:color/transparent"
                 android:layout_marginLeft="40dp"/>
-                />
+            />
         </LinearLayout>
 
         <ImageButton
-            android:id="@+id/btnCamera"
+            android:id="@+id/btnCameraFront"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:background="@android:color/transparent"
@@ -43,14 +43,11 @@
 
         </ImageButton>
         <ImageButton
-            android:id="@+id/btnCameraChange"
+            android:id="@+id/btnCameraChangeFront"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:background="@android:color/transparent"
             android:src="@drawable/change_camera"
             android:layout_marginLeft="40dp"/>
-
-    </LinearLayout>
-
-
+</LinearLayout>
 </LinearLayout>

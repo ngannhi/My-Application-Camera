@@ -1,32 +1,25 @@
 package com.example.myapplicationcamera;
 
-import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
+import android.hardware.Camera;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Surface;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.QuickContactBadge;
-import android.hardware.Camera;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Parameter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.SimpleFormatter;
 
-public class MainActivity extends AppCompatActivity {
+public class CameraFrontActivity extends AppCompatActivity {
+
     Camera mCamera;
     ImageButton btnCamera;
     CameraPreview cameraPreview;
@@ -36,17 +29,17 @@ public class MainActivity extends AppCompatActivity {
     private Camera.PictureCallback pictureCallback;
     private File mediaFile;
     private Boolean checkmediaFile = false;
-    private int TYPE_CAMERA = 0;
+    private int TYPE_CAMERA = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        btnCamera = findViewById(R.id.btnCamera);
-        btnImage = findViewById(R.id.btnImage);
-        btnChangeCamera = findViewById(R.id.btnCameraChange);
+        setContentView(R.layout.activity_camera_front);
+        btnCamera = findViewById(R.id.btnCameraFront);
+        btnImage = findViewById(R.id.btnImageFront);
+        btnChangeCamera = findViewById(R.id.btnCameraChangeFront);
         mCamera = getCameraInstance();
         cameraPreview = new CameraPreview(this, mCamera);
-        preview = findViewById(R.id.framelayout_camera);
+        preview = findViewById(R.id.framelayout_camera_front);
         preview.addView(cameraPreview);
         addEvents();
         eventImage();
@@ -127,31 +120,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void eventImage(){
-            btnImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (checkmediaFile == true){
-                        String pathImage = String.valueOf(mediaFile);
-                        Intent intent = new Intent(MainActivity.this, PictureReviewActivity.class);
-                        intent.putExtra("pathImage",pathImage);
-                        startActivity(intent);
-                    }
-                    else {
-                        Toast.makeText(MainActivity.this, "Không có ảnh nào", Toast.LENGTH_LONG);
-                    }
+        btnImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkmediaFile == true){
+                    String pathImage = String.valueOf(mediaFile);
+                    Intent intent = new Intent(CameraFrontActivity.this, PictureReviewActivity.class);
+                    intent.putExtra("pathImage",pathImage);
+                    startActivity(intent);
                 }
-            });
+                else {
+                    Toast.makeText(CameraFrontActivity.this, "Không có ảnh nào", Toast.LENGTH_LONG);
+                }
+            }
+        });
     }
 
     private void eventChangeCamera(){
         btnChangeCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CameraFrontActivity.class);
+                Intent intent = new Intent(CameraFrontActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
     }
-
 }
