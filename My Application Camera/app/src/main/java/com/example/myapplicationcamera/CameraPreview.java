@@ -10,6 +10,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.content.Context;
 
+import java.io.IOException;
 import java.util.List;
 
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
@@ -27,13 +28,25 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        Camera.Parameters pare = camera.getParameters();
-        List<Camera.Size> sizes = pare.getSupportedPictureSizes();
-        Camera.Size mSize = null;
-
-        for (Camera.Size size : sizes){
-            mSize = size ;
+        try {
+            setFocus(holder);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        Camera.Parameters pare = camera.getParameters();
+//        if(pare.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)){
+//            pare.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+//        } else {
+//            pare.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+//        }
+//        // set Camera parameters
+//        camera.setParameters(pare);
+        List<Camera.Size> sizes = pare.getSupportedPictureSizes();
+        Camera.Size mSize = sizes.get(2);
+
+//        for (Camera.Size size : sizes){
+//            mSize = size ;
+//        }
 
         if(this.getResources().getConfiguration().orientation!= Configuration.ORIENTATION_LANDSCAPE)
         {
@@ -93,7 +106,19 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        camera.release();
+
+    }
+
+    public void setFocus(SurfaceHolder holder) throws IOException {
+        Camera.Parameters params = camera.getParameters();
+        List<String> focusModes = params.getSupportedFocusModes();
+        if (focusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO))
+        {
+            params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+        }
+        camera.setParameters(params);
+        camera.setPreviewDisplay(holder);
+        camera.startPreview();
     }
 /*
     public void setCameraDisplayOrientation(Activity activity, int cameraId, Camera camera){

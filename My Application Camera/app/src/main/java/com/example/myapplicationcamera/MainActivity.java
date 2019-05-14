@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.QuickContactBadge;
 import android.hardware.Camera;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,18 +30,22 @@ public class MainActivity extends AppCompatActivity {
     Camera mCamera;
     ImageButton btnCamera;
     CameraPreview cameraPreview;
+    ImageButton btnImage;
     private Camera.PictureCallback pictureCallback;
+    private File mediaFile;
+    private Boolean checkmediaFile = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btnCamera = findViewById(R.id.btnCamera);
-
+        btnImage = findViewById(R.id.btnImage);
         mCamera = getCameraInstance();
         cameraPreview = new CameraPreview(this, mCamera);
         FrameLayout preview = findViewById(R.id.framelayout_camera);
         preview.addView(cameraPreview);
         addEvents();
+        eventImage();
     }
 
     private void addEvents(){
@@ -58,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                     fileOutputStream.write(data);
                     fileOutputStream.close();
                     camera.startPreview();
+                    btnCamera.setEnabled(true);
                 }catch (FileNotFoundException e){
                     Log.d("MainActivity", "File not found: " + e.getMessage());
                 }catch (IOException e){
@@ -71,8 +77,11 @@ public class MainActivity extends AppCompatActivity {
 //                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
 //                startActivity(intent);
                 mCamera.takePicture(null, null, pictureCallback);
+                btnCamera.setEnabled(false);
             }
         });
+
+
     }
 
     public Camera getCameraInstance(){
@@ -107,8 +116,26 @@ public class MainActivity extends AppCompatActivity {
         }
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        File mediaFile;
         mediaFile = new File(mediaStorage.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
+        checkmediaFile = true;
         return  mediaFile;
     }
+
+    private void eventImage(){
+            btnImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (checkmediaFile == true){
+                        String pathImage = String.valueOf(mediaFile);
+                        Intent intent = new Intent(MainActivity.this, PictureReviewActivity.class);
+                        intent.putExtra("pathImage",pathImage);
+                        startActivity(intent);
+                    }
+                    else {
+                        Toast.makeText(MainActivity.this, "Không có ảnh nào", Toast.LENGTH_LONG);
+                    }
+                }
+            });
+    }
+
 }

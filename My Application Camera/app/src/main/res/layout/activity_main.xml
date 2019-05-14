@@ -11,15 +11,37 @@
         android:id="@+id/framelayout_camera"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.7"
-        ></FrameLayout>
+        android:layout_weight="0.5"></FrameLayout>
 
-    <ImageButton
-        android:id="@+id/btnCamera"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:layout_weight="0.3"
-        android:src="@drawable/camera" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left">
+            <ImageButton
+                android:id="@+id/btnImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/picture"
+                android:background="@android:color/transparent"
+                />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnCamera"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/camera"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"/>
+    </LinearLayout>
+
 
 </LinearLayout>
