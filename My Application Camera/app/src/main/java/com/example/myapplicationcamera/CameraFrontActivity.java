@@ -38,7 +38,7 @@ public class CameraFrontActivity extends AppCompatActivity {
         btnImage = findViewById(R.id.btnImageFront);
         btnChangeCamera = findViewById(R.id.btnCameraChangeFront);
         mCamera = getCameraInstance();
-        cameraPreview = new CameraPreview(this, mCamera);
+        cameraPreview = new CameraPreview(this, mCamera, TYPE_CAMERA);
         preview = findViewById(R.id.framelayout_camera_front);
         preview.addView(cameraPreview);
         addEvents();
