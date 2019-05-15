@@ -18,12 +18,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        >
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left">
             <ImageButton
                 android:id="@+id/btnImage"
                 android:layout_width="100dp"
@@ -31,24 +28,23 @@
                 android:src="@drawable/picture"
                 android:background="@android:color/transparent"
                 android:layout_marginLeft="40dp"/>
+
+            <ImageButton
+                android:id="@+id/btnCamera"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/camera">
+
+            </ImageButton>
+            <ImageButton
+                android:id="@+id/btnCameraChange"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/change_camera"
+                android:layout_marginLeft="40dp"/>
                 />
-        </LinearLayout>
-
-        <ImageButton
-            android:id="@+id/btnCamera"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/camera">
-
-        </ImageButton>
-        <ImageButton
-            android:id="@+id/btnCameraChange"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/change_camera"
-            android:layout_marginLeft="40dp"/>
 
     </LinearLayout>
 

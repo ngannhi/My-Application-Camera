@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -18,7 +20,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CameraFrontActivity extends AppCompatActivity {
+public class CameraFrontActivity extends BaseAcivity {
 
     Camera mCamera;
     ImageButton btnCamera;
@@ -33,11 +35,18 @@ public class CameraFrontActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_camera_front);
         btnCamera = findViewById(R.id.btnCameraFront);
         btnImage = findViewById(R.id.btnImageFront);
         btnChangeCamera = findViewById(R.id.btnCameraChangeFront);
-        mCamera = getCameraInstance();
+        if(getCameraInstance() == null){
+            super.showAlertDialog("Không tìm thấy camera");
+        }
+        else{
+            mCamera = getCameraInstance();
+        }
         cameraPreview = new CameraPreview(this, mCamera, TYPE_CAMERA);
         preview = findViewById(R.id.framelayout_camera_front);
         preview.addView(cameraPreview);
@@ -86,14 +95,6 @@ public class CameraFrontActivity extends AppCompatActivity {
         Camera c = null;
 
         try {
-
-//            Camera.Parameters parameters = c.getParameters();
-//            List<String> focusModes = parameters.getSupportedFocusModes();
-//            if(focusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO)){
-//                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-//                c.setParameters(parameters);
-//            }
-
             c = Camera.open(TYPE_CAMERA); // attempt to get a Camera instance
 
         }
@@ -130,7 +131,7 @@ public class CameraFrontActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else {
-                    Toast.makeText(CameraFrontActivity.this, "Không có ảnh nào", Toast.LENGTH_LONG);
+                    Toast.makeText(CameraFrontActivity.this, "Không tìm thấy ảnh", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -142,6 +143,7 @@ public class CameraFrontActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(CameraFrontActivity.this, MainActivity.class);
                 startActivity(intent);
+                mCamera.release();
                 finish();
             }
         });
